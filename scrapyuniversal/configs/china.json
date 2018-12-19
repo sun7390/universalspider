@@ -1,0 +1,84 @@
+{
+  "spider": "universal",
+  "website": "中华网科技",
+  "type": "新闻",
+  "index": "http://tech.china.com/",
+  "settings": [
+    {"USER_AGENT": "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50"},
+    {"USER_AGENT":  "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50"},
+    {"USER_AGENT":  "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0"},
+    {"USER_AGENT":  "Mozilla/5.0 (Windows NT 6.1; rv,2.0.1) Gecko/20100101 Firefox/4.0.1"},
+    {"USER_AGENT":  "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Maxthon 2.0)"},
+    {"USER_AGENT":  "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; 360SE)"},
+    {"USER_AGENT":  "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)"},
+    {"USER_AGENT":  "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0"},
+    {"USER_AGENT":  "Opera/9.80 (Windows NT 6.1; U; en) Presto/2.8.131 Version/11.11"}
+  ],
+  "start_urls": {
+    "type":"dynamic",
+    "method":"china",
+    "args":[
+      10, 15
+    ]
+  },
+  "allowed_domains": [
+    "tech.china.com"
+  ],
+  "rules": "china",
+  "item": {
+    "class":"NewsItem",
+    "loader":"ChinaLoader",
+    "attrs":{
+      "title":[
+        {
+          "methods":"xpath",
+          "args":[
+            "//h1[@id='chan_newsTitle']/text()"
+          ]
+        }
+      ],
+      "url": [
+        {
+          "method":"attr",
+          "args":[
+            "url"
+          ]
+        }
+      ],
+      "text": [
+        {
+          "method":"xpath",
+          "args":[
+            "//div[@id='chan_newsDetail']//text()"
+          ]
+        }
+      ],
+      "datetime":[
+        {
+          "method":"xpath",
+          "args":[
+            "//div[@id='chan_newsInfo']/text()"
+          ],
+          "re": "r'(\\d+-\\d+-\\d+\\s\\d+:\\d+:\\d+)'"
+        }
+      ],
+      "source":[
+        {
+          "method":"xpath",
+          "args":[
+            "//div[@id='chan_newsInfo']/text()"
+          ],
+          "re":"来源：(.*)"
+        }
+      ],
+      "website":[
+        {
+          "method":"value",
+          "args":[
+            "中华网"
+          ]
+        }
+      ]
+    }
+  }
+}

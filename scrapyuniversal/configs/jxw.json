@@ -1,0 +1,79 @@
+{
+  "spider": "universal",
+  "website": "北京市经济和信息化局",
+  "type": "新闻",
+  "index": "http://jxw.beijing.gov.cn/",
+  "settings": [
+    {"USER_AGENT": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"},
+    {"USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36"},
+    {"USER_AGENT": "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; 360SE)"},
+    {"USER_AGENT": "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; TencentTraveler 4.0)"}
+  ],
+  "start_urls": {
+    "start_url":"http://106.38.57.66:8080/oasearch/front/search.do",
+    "method": "jxw",
+    "args":[
+      1,10
+    ]
+  },
+  "allowed_domains": [
+    "jxw.beijing.gov.cn"
+  ],
+  "rules": "jxw",
+  "item": {
+    "class": "NewsItem",
+    "loader": "ChinaLoader",
+    "attrs": {
+      "title": [
+        {
+          "method": "css",
+          "args": [
+            "div.text_main h4::text"
+          ]
+        }
+      ],
+      "url": [
+        {
+          "method": "attr",
+          "args": [
+            "url"
+          ]
+        }
+      ],  
+      "text": [
+        {
+          "method": "xpath",
+          "args":[
+            "//div[@class='txt']//text()"
+          ]
+        }
+      ],
+      "datetime": [
+        {
+          "method":"css",
+          "args": [
+            "span.text_ly-lf::text"
+          ],
+          "re": "(\\d+-\\d+-\\d+\\s\\d+:\\d+)"
+        }
+      ],
+      "source":[
+        {
+          "method":"css",
+          "args":[
+            "span.text_ly-lf::text"
+          ],
+          "re":"来源：(.*)发布日期"
+        }
+      ],
+      "website":[
+        {
+          "method":"value",
+          "args":[
+            "北京市经济和信息化局"
+          ]
+        }
+      ]
+    }
+  }
+}
